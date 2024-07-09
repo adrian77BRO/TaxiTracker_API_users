@@ -18,7 +18,7 @@ export class LoginController {
             if (!user) {
                 return res.status(404).send({
                     status: 'error',
-                    msg: 'Correo incorrecto'
+                    msg: 'Incorrect email'
                 });
             }
 
@@ -29,14 +29,14 @@ export class LoginController {
             if (!isPasswordValid) {
                 return res.status(401).send({
                     status: 'error',
-                    msg: 'Contraseña incorrecta'
+                    msg: 'Incorrect password'
                 });
             }
 
             const token = jwt.sign({ email: credentials.email }, secret, { expiresIn: '1h' });
             res.status(200).send({
                 status: 'success',
-                msg: 'Acceso exitoso al sistema',
+                msg: 'Successfull access, welcome!',
                 user,
                 token
             });

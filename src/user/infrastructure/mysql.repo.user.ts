@@ -4,10 +4,10 @@ import { UserRepository } from '../domain/repositories/user.repository';
 
 export class MysqlUserRepository implements UserRepository {
     async getAllUsers(): Promise<User[] | null> {
-        const sql = 'SELECT * FROM users'
+        const sql = 'CALL getAllUsers()';
         try {
             const [data]: any = await query(sql, []);
-            const users = Object.values(JSON.parse(JSON.stringify(data)));
+            const users = Object.values(JSON.parse(JSON.stringify(data[0])));
             return users.map(
                 (user: any) => (
                     new User(
@@ -25,17 +25,17 @@ export class MysqlUserRepository implements UserRepository {
     }
 
     async getUserByEmail(email: string): Promise<User | null> {
-        const sql = 'SELECT * FROM users WHERE email = ?';
+        const sql = 'CALL getUserByEmail(?)';
         const params: any[] = [email];
         try {
             const [result]: any = await query(sql, params);
             return new User(
-                result[0].id,
-                result[0].name,
-                result[0].last_name,
-                result[0].email,
-                result[0].password
-            );;
+                result[0][0].id,
+                result[0][0].name,
+                result[0][0].last_name,
+                result[0][0].email,
+                result[0][0].password
+            );
         } catch (error) {
             return null;
         }
@@ -48,7 +48,7 @@ export class MysqlUserRepository implements UserRepository {
         email: string,
         password: string
     ): Promise<User | null> {
-        const sql = 'INSERT INTO users (id, name, last_name, email, password) VALUES (?, ?, ?, ?, ?)';
+        const sql = 'CALL registerUser(?, ?, ?, ?, ?)';
         const params: any[] = [id, name, last_name, email, password];
         try {
             const [result]: any = await query(sql, params);

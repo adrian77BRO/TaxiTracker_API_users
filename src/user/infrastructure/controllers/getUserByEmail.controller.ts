@@ -8,7 +8,7 @@ export class GetUserByEmailController {
         const email: string = req.params.email;
         try {
             const user = await this.getUserByEmailService.run(email);
-
+            
             if (user) {
                 res.status(200).send({
                     status: 'success',
@@ -19,7 +19,7 @@ export class GetUserByEmailController {
                         email: user.email,
                         password: user.password,
                     },
-                })
+                });
             } else {
                 res.status(404).send({
                     status: 'error',

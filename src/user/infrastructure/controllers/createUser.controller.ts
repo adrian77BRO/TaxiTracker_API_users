@@ -18,14 +18,14 @@ export class CreateUserController {
             if (!validateEmail(data.email)) {
                 return res.status(400).send({
                     status: 'error',
-                    msg: 'Correo electrónico inválido',
+                    msg: 'Invalid email format',
                 });
             }
 
             if (!validatePassword(data.password)) {
                 return res.status(400).send({
                     status: 'error',
-                    msg: 'La contraseña debe tener más de 8 caracteres',
+                    msg: 'Password must be more than 8 characters',
                 });
             }
 
@@ -33,7 +33,7 @@ export class CreateUserController {
             if (existingUser) {
                 return res.status(401).send({
                     status: 'error',
-                    msg: 'El correo ya ha sido registrado',
+                    msg: 'Email has already been registered',
                 });
             }
 
@@ -56,7 +56,7 @@ export class CreateUserController {
                         email: user?.email,
                         password: user?.password
                     },
-                    msg: 'Se ha registrado exitosamente al sistema'
+                    msg: 'Successfull registration to the system'
                 })
             } else {
                 res.status(204).send({
