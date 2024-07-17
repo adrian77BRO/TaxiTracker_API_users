@@ -57,4 +57,15 @@ export class MysqlUserRepository implements UserRepository {
             return null;
         }
     }
+
+    async getUserByKitId(kit_id: string): Promise<string | null> {
+        const sql = 'CALL getUserByKitId(?)';
+        const params: any[] = [kit_id];
+        try {
+            const [result]: any = await query(sql, params);
+            return result[0][0];
+        } catch (error) {
+            return null;
+        }
+    }
 }

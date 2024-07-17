@@ -10,4 +10,5 @@ export interface UserRepository {
         email: string,
         password: string
     ): Promise<User | null>;
+    getUserByKitId(kit_id: string): Promise<string | null>;
 }
