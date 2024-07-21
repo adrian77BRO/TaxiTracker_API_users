@@ -1,5 +1,6 @@
 import { query } from '../../database/mysql';
 import { User } from '../domain/entities/user';
+import { Driver } from '../domain/entities/driver';
 import { UserRepository } from '../domain/repositories/user.repository';
 
 export class MysqlUserRepository implements UserRepository {
@@ -64,6 +65,24 @@ export class MysqlUserRepository implements UserRepository {
         try {
             const [result]: any = await query(sql, params);
             return result[0][0];
+        } catch (error) {
+            return null;
+        }
+    }
+
+    async getDriverByPin(pin: string): Promise<Driver | null> {
+        const sql = 'CALL getDriverByPin(?);';
+        const params: any[] = [pin];
+        try {
+            const [result]: any = await query(sql, params);
+            return new Driver(
+                result[0][0].id,
+                result[0][0].kit_id,
+                result[0][0].name,
+                result[0][0].last_name,
+                result[0][0].pin,
+                result[0][0].image
+            );
         } catch (error) {
             return null;
         }
