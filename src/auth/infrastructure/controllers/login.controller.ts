@@ -37,7 +37,7 @@ export class LoginController {
             res.status(200).send({
                 status: 'success',
                 msg: 'Successfull access, welcome!',
-                user,
+                data:user,
                 token
             });
         } catch (error) {
